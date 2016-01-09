@@ -1,20 +1,18 @@
 'use strict';
 
-module.exports.DB_USER = process.env.DB_USER || 'neo4j';
+module.exports.SLACK_TOKEN          = process.env.SLACK_TOKEN || 'xoxb-18111454710-CZbIYNze2QxiQejsFOC2Fzhv';
+module.exports.SLACK_AUTO_RECONNECT = true;
+module.exports.SLACK_AUTO_MARK      = true;
+module.exports.DB_USER              = process.env.DB_USER || 'neo4j';
+module.exports.DB_PASSWORD          = process.env.DB_PASSWORD || 'password';
 
-module.exports.DB_PASSWORD = process.env.DB_PASSWORD || 'password';
+module.exports.moods = [
 
-module.exports.PORT = process.env.PORT || 3000;
+    'unhappy',
+    'ok',
+    'happy'
 
-module.exports.statusCode = {
-
-  CREATED: 201,
-  NOT_FOUND: 404,
-  BAD_REQUEST: 400,
-  INTERNAL_SERVER_ERROR: 500,
-  OK: 200
-
-};
+];
 
 module.exports.strings = {
 

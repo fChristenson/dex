@@ -1,45 +1,53 @@
 'use strict';
 
-var models      = require('./models');
-var controllers = require('./controllers');
-var packageJson = require('../package.json');
-var express     = require('express');
-var app         = express();
-var bodyparser  = require('body-parser');
-var constants   = require('./config/constants.js');
-var db          = require('seraph')({
+var U = require('./utils');
 
-  server: constants.DB_URI,
-  user: constants.DB_USER,
-  pass: constants.DB_PASSWORD
+module.exports = function(model, slack) {
 
-});
+  slack.on('open', function() {
 
-var loadedModels = models(db);
+    console.log(slack.self.name, 'connected to', slack.team.name);
 
-app.use(bodyparser.json());
+  });
 
-app.use(function(req, res, next) {
+  slack.on('message', function(message) {
 
-  req.models = loadedModels;
-  return next();
+    var channel = slack.getChannelGroupOrDMByID(message.channel);
+    var user    = slack.getUserByID(message.user);
+    var date    = new Date().toISOString();
+    var command = U.stringToCommand(message.text);
 
-});
+    if (command.isWrite) {
 
-app.get('/', function(req, res) {
+      model.save(command.data, command.dataLabel)
+        .then(function() {
 
-  var instructions = {
+          channel.send(U.commandToResponse(command));
 
-    name: packageJson.name,
-    description: packageJson.description
+        }).catch(function(error) {
 
-  };
+          channel.send('Error: ' + error.message);
 
-  res.json(instructions);
+        });
 
-});
+    } else if (command.isHelp) {
 
-app.get('/mood', controllers.mood.getMood);
-app.get('/moods', controllers.mood.getMoods);
+      channel.send(U.getHelpMessage());
 
-module.exports = app;
+    } else {
+
+      channel.send('I heard you');
+
+    }
+
+  });
+
+  slack.on('error', function(error) {
+
+    console.log(error);
+
+  });
+
+  return slack;
+
+};
