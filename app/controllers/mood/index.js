@@ -2,10 +2,21 @@
 
 module.exports.getMood = function(req, res, next) {
 
-  req.models.mood.save({test: 1}).then(function() {
+  return req.models.mood.save({test: 1})
+        .then(function(mood) {
 
-    res.end('foo');
+          res.json(mood);
 
-  });
+        });
 
+};
+
+module.exports.getMoods = function(req, res, next) {
+
+  return req.models.mood.getMoods()
+        .then(function(moods) {
+
+          res.json(moods);
+
+        });
 };

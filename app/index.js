@@ -40,5 +40,6 @@ app.get('/', function(req, res) {
 });
 
 app.get('/mood', controllers.mood.getMood);
+app.get('/moods', controllers.mood.getMoods);
 
 module.exports = app;

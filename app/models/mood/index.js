@@ -14,6 +14,11 @@ module.exports = function(db) {
 
       return DAO.saveAsync(mood, label);
 
+    },
+    getMoods: function() {
+
+      return DAO.nodesWithLabelAsync(label);
+
     }
 
   };

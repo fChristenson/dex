@@ -1,10 +1,10 @@
 'use strict';
 
-var app = require('./app');
-var port = process.env.DEX_PORT || 3000;
+var app       = require('./app');
+var constants = require('./app/config/constants.js');
 
-app.listen(port, function() {
+app.listen(constants.PORT, function() {
 
-  console.log('Server started on port', port);
+  console.log('Server started on port', constants.PORT);
 
 });
