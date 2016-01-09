@@ -5,20 +5,20 @@ var fs   = require('fs');
 
 function load() {
 
-  var controllers = {};
-  var controllerDirectories =  fs.readdirSync(__dirname);
+  var modules = {};
+  var modulesDirectories =  fs.readdirSync(__dirname);
 
-  controllerDirectories.forEach(function(dir) {
+  modulesDirectories.forEach(function(dir) {
 
     if (fs.statSync(path.join(__dirname, dir)).isDirectory()) {
 
-      controllers[dir] = require(path.join(__dirname, dir));
+      modules[dir] = require(path.join(__dirname, dir));
 
     }
 
   });
 
-  return controllers;
+  return modules;
 
 }
 
