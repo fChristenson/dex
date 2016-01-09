@@ -2,7 +2,7 @@
   "name": "dex",
   "version": "1.0.0",
   "description": "A slack bot for checking how happy your teams are",
-  "main": "index.js",
+  "main": "./app/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fChristenson/dex.git"
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/fChristenson/dex#readme",
   "scripts": {
+    "start": "node server.js",
     "test": "gulp test",
     "pre-push": "ln -sf ../../pre-push.sh .git/hooks/pre-push",
     "pre-commit": "ln -sf ../../pre-commit.sh .git/hooks/pre-commit",
@@ -39,5 +40,11 @@
     "gulp-mocha": "^2.2.0",
     "rewire": "^2.5.1",
     "sinon": "^1.17.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "ramda": "^0.19.1",
+    "seraph": "^0.14.0"
   }
 }
