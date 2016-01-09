@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "A slack bot for checking how happy your teams are",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fChristenson/dex.git"
@@ -21,5 +18,26 @@
   "bugs": {
     "url": "https://github.com/fChristenson/dex/issues"
   },
-  "homepage": "https://github.com/fChristenson/dex#readme"
+  "homepage": "https://github.com/fChristenson/dex#readme",
+  "scripts": {
+    "test": "gulp test",
+    "pre-push": "ln -sf ../../pre-push.sh .git/hooks/pre-push",
+    "pre-commit": "ln -sf ../../pre-commit.sh .git/hooks/pre-commit",
+    "post-commit": "ln -sf ../../post-commit.sh .git/hooks/post-commit",
+    "add-hooks": "npm run pre-commit && npm run pre-push && npm run post-commit",
+    "create-db": "docker run -d --name db -p 7474:7474 neo4j/neo4j",
+    "start-db": "docker start db",
+    "setup-env": "npm run start-db",
+    "make": "npm run add-hooks && npm run create-db"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-exit": "0.0.2",
+    "gulp-istanbul": "^0.10.3",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "rewire": "^2.5.1",
+    "sinon": "^1.17.2"
+  }
 }
