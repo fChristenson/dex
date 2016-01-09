@@ -1,0 +1,25 @@
+{
+  "name": "dex",
+  "version": "1.0.0",
+  "description": "A slack bot for checking how happy your teams are",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fChristenson/dex.git"
+  },
+  "keywords": [
+    "slack",
+    "bot",
+    "team",
+    "happiness"
+  ],
+  "author": "Fredrik Christenson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fChristenson/dex/issues"
+  },
+  "homepage": "https://github.com/fChristenson/dex#readme"
+}
