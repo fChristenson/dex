@@ -11,13 +11,13 @@ var R         = require('ramda');
  */
 var getMoodMessage = function(data) {
 
-  var str = 'The mood in our team is:\n';
+    var str = 'The mood in our team is:\n';
 
-  str += '* happy: '   + data[constants.MOODS[0]] + '\n';
-  str += '* ok: '      + data[constants.MOODS[1]] + '\n';
-  str += '* unhappy: ' + data[constants.MOODS[2]] + '\n';
+    str += '* happy: '   + data[constants.MOODS[0]] + '\n';
+    str += '* ok: '      + data[constants.MOODS[1]] + '\n';
+    str += '* unhappy: ' + data[constants.MOODS[2]] + '\n';
 
-  return str;
+    return str;
 
 };
 
@@ -33,11 +33,11 @@ module.exports.getMoodMessage = getMoodMessage;
  */
 var todayAsMilliseconds = function() {
 
-  var date = new Date().toISOString(); // 2016-01-10T07:04:15.369Z
-  var array = date.split('T'); // [2016-01-10, 07:04:15.369Z]
-  array = array[0].split('-'); // [2016, 01, 10]
+    var date = new Date().toISOString(); // 2016-01-10T07:04:15.369Z
+    var array = date.split('T'); // [2016-01-10, 07:04:15.369Z]
+    array = array[0].split('-'); // [2016, 01, 10]
 
-  return Date.UTC.apply(null, array);
+    return Date.UTC.apply(null, array);
 
 };
 
@@ -52,8 +52,8 @@ module.exports.todayAsMilliseconds = todayAsMilliseconds;
  */
 var log = R.curry(function(label, val) {
 
-  console.log(label, val);
-  return val;
+    console.log(label, val);
+    return val;
 
 });
 
@@ -69,15 +69,26 @@ module.exports.log = log;
  */
 var stringToCommand = function(str) {
 
-  str             = str.toLowerCase();
-  var command     = {};
-  var match       = new RegExp('^' + constants.MOODS.join('|')).exec(str);
-  command.isHelp  = /^help/.test(str);
-  command.mood    = match ? match[0] : undefined;
-  command.isWrite = !!command.mood;
-  command.isRead  = /^mood/.test(str);
+    str             = str.toLowerCase();
+    var command     = {};
+    var match       = new RegExp('^' + constants.MOODS.join('|')).exec(str);
 
-  return command;
+    if (/^help/.test(str)) {
+
+        command.type = 'help';
+
+    } else if (match) {
+
+        command.type = 'save';
+        command.mood = match ? match[0] : undefined;
+
+    } else if (/^mood/.test(str)) {
+
+        command.type = 'read';
+
+    }
+
+    return command;
 
 };
 
@@ -93,7 +104,7 @@ module.exports.stringToCommand = stringToCommand;
  */
 var stringToCodeString = function(val) {
 
-  return '`' + val + '`';
+    return '`' + val + '`';
 
 };
 
@@ -109,14 +120,14 @@ module.exports.stringToCodeString = stringToCodeString;
  */
 var getHelpMessage = function() {
 
-  var msg = 'Hi!\n';
+    var msg = 'Hi!\n';
 
-  msg += 'To tell me how you feel, ';
-  msg += 'type one of the following words:\n';
-  msg += stringToCodeString(constants.MOODS.join(', ')) + '\n';
-  msg += 'To check the mood of our team type: ' + stringToCodeString('mood');
+    msg += 'To tell me how you feel, ';
+    msg += 'type one of the following words:\n';
+    msg += stringToCodeString(constants.MOODS.join(', ')) + '\n';
+    msg += 'To check the mood of our team type: ' + stringToCodeString('mood');
 
-  return msg;
+    return msg;
 
 };
 
