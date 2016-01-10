@@ -2,8 +2,8 @@
 A slack bot for checking how happy your team is
 
 ## Usage
-Register the bot, provide the required token and setup your neo4j db.
-Log on to the bot chat and type `help` for more information.
+* Register the bot, provide the required token and setup your neo4j db.
+* Log on to the bot chat and type `help` for more information.
 
 ## Configuration
 
