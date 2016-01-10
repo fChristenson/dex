@@ -31,4 +31,21 @@ describe('model test', function() {
 
   });
 
+  describe('find', function() {
+
+    it('should find data', function(done) {
+
+      model.find({foo: 1}, 'bar')
+              .then(function(result) {
+
+                assert.ok(result);
+                assert.equal(result.length, 0);
+                done();
+
+              });
+
+    });
+
+  });
+
 });

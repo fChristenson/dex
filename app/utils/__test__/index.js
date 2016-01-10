@@ -1,7 +1,8 @@
 'use strict';
 
-var U      = require('../');
-var assert = require('assert');
+var constants = require('../../config/constants.js');
+var U         = require('../');
+var assert    = require('assert');
 
 describe('util tests', function() {
 
@@ -44,6 +45,28 @@ describe('util tests', function() {
       done();
 
     });
+
+    it('should set isWrite to true if string start with a trigger', function(done) {
+
+      constants.moods.forEach(function(mood) {
+
+        var result = U.stringToCommand(mood);
+        assert.ok(result.isWrite, true);
+
+      });
+
+      done();
+
+    });
+
+    it('should set isWrite to false if string does not start with a trigger', function(done) {
+
+      var result = U.stringToCommand('foo');
+      assert.equal(result.isWrite, false);
+      done();
+
+    });
+
   });
 
   describe('stringToCodeString', function() {

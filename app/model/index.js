@@ -10,7 +10,13 @@ module.exports = function(db) {
 
     save: function(data, label) {
 
+      label = (data.id) ? undefined : label; // neo4j breaks if a label is provided during update
       return DAO.saveAsync(data, label);
+
+    },
+    find: function(predicate, label) {
+
+      return DAO.findAsync(predicate, label);
 
     }
 
