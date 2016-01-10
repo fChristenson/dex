@@ -8,9 +8,9 @@ module.exports.DB_PASSWORD          = process.env.DB_PASSWORD || 'password';
 
 module.exports.MOODS = [
 
-    'unhappy',
+    'happy',
     'ok',
-    'happy'
+    'unhappy'
 
 ];
 

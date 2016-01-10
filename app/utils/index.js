@@ -13,9 +13,9 @@ var getMoodMessage = function(data) {
 
   var str = 'The mood in our team is:\n';
 
-  str += '* happy: '   + data.happy + '\n';
-  str += '* ok: '      + data.ok + '\n';
-  str += '* unhappy: ' + data.unhappy;
+  str += '* happy: '   + data[constants.MOODS[0]] + '\n';
+  str += '* ok: '      + data[constants.MOODS[1]] + '\n';
+  str += '* unhappy: ' + data[constants.MOODS[2]] + '\n';
 
   return str;
 
