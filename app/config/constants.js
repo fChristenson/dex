@@ -6,7 +6,7 @@ module.exports.SLACK_AUTO_MARK      = true;
 module.exports.DB_USER              = process.env.DB_USER || 'neo4j';
 module.exports.DB_PASSWORD          = process.env.DB_PASSWORD || 'password';
 
-module.exports.moods = [
+module.exports.MOODS = [
 
     'unhappy',
     'ok',
@@ -16,7 +16,9 @@ module.exports.moods = [
 
 module.exports.strings = {
 
-  MOOD: 'mood'
+  SLACK_OPEN_EVENT: 'open',
+  SLACK_MESSAGE_EVENT: 'message',
+  SLACK_ERROR_EVENT: 'error'
 
 };
 
