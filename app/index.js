@@ -17,7 +17,8 @@ module.exports = function(model, slack) {
     // We get the channel and the user data
     var channel = slack.getChannelGroupOrDMByID(message.channel);
     var command = U.stringToCommand(message.text);
-    var user = slack.getUserByID(message.user);
+    var user    = slack.getUserByID(message.user);
+    var equals   = [];
     var date;
     var data;
     var hash;
@@ -58,10 +59,15 @@ module.exports = function(model, slack) {
 
     } else if (command.isRead) {
 
-      model.reduce(constants.MOODS)
+      // currenty there are only 3 moods
+      equals.push({mood: constants.MOODS[0]});
+      equals.push({mood: constants.MOODS[1]});
+      equals.push({mood: constants.MOODS[2]});
+
+      model.count(equals)
             .then(function(data) {
 
-                channel.send(U.getMoodReduceMessage(data));
+              channel.send(U.getMoodMessage(data));
 
             })
             .catch(function(error) {

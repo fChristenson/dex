@@ -9,19 +9,19 @@ var R         = require('ramda');
  * Converts an object with moods into a string.
  * @author <fredrik.christenson@gmail.com>
  */
-var getMoodReduceMessage = function(data) {
+var getMoodMessage = function(data) {
 
   var str = 'The mood in our team is:\n';
 
-  str += '* ' + data.happy + '\n';
-  str += '* ' + data.ok + '\n';
-  str += '* ' + data.unhappy;
+  str += '* happy: '   + data.happy + '\n';
+  str += '* ok: '      + data.ok + '\n';
+  str += '* unhappy: ' + data.unhappy;
 
   return str;
 
 };
 
-module.exports.getMoodReduceMessage = getMoodReduceMessage;
+module.exports.getMoodMessage = getMoodMessage;
 
 /**
  * _->Number a
@@ -75,6 +75,7 @@ var stringToCommand = function(str) {
   command.isHelp  = /^help/.test(str);
   command.mood    = match ? match[0] : undefined;
   command.isWrite = !!command.mood;
+  command.isRead  = /^mood/.test(str);
 
   return command;
 
@@ -111,8 +112,9 @@ var getHelpMessage = function() {
   var msg = 'Hi!\n';
 
   msg += 'To tell me how you feel, ';
-  msg += 'send me a message with one of the following words:\n';
-  msg += stringToCodeString(constants.MOODS.join(', '));
+  msg += 'type one of the following words:\n';
+  msg += stringToCodeString(constants.MOODS.join(', ')) + '\n';
+  msg += 'To check the mood of our team type: ' + stringToCodeString('mood');
 
   return msg;
 
