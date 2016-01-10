@@ -18,7 +18,6 @@ module.exports = function(model, slack) {
     var channel = slack.getChannelGroupOrDMByID(message.channel);
     var command = U.stringToCommand(message.text);
     var user    = slack.getUserByID(message.user);
-    var equals   = [];
     var date;
     var data;
     var hash;
@@ -59,18 +58,26 @@ module.exports = function(model, slack) {
 
     } else if (command.isRead) {
 
-      // currenty there are only 3 moods
-      equals.push({mood: constants.MOODS[0]});
-      equals.push({mood: constants.MOODS[1]});
-      equals.push({mood: constants.MOODS[2]});
+      model.count({mood: constants.MOODS[0]}, 'mood')
+          .then(function(d) {
 
-      model.count(equals)
-            .then(function(data) {
+            data = d;
+            return model.count({mood: constants.MOODS[1]}, 'mood');
 
-              channel.send(U.getMoodMessage(data));
+          })
+          .then(function(d) {
 
-            })
-            .catch(function(error) {
+            data = R.merge(data, d);
+            return model.count({mood: constants.MOODS[2]}, 'mood');
+
+          })
+          .then(function(d) {
+
+            data = R.merge(data, d);
+            channel.send(U.getMoodMessage(data));
+
+          })
+          .catch(function(error) {
               // if we hit an error we report it back to the slack channel
               var response = R.compose(R.add('Error: '),  R.prop('message'));
               channel.send(response(error));

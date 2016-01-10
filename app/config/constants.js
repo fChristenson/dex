@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports.SLACK_TOKEN          = process.env.SLACK_TOKEN || 'xoxb-18111454710-CZbIYNze2QxiQejsFOC2Fzhv';
+module.exports.SLACK_TOKEN          = process.env.SLACK_TOKEN || '<token>';
 module.exports.SLACK_AUTO_RECONNECT = true;
 module.exports.SLACK_AUTO_MARK      = true;
 module.exports.DB_USER              = process.env.DB_USER || 'neo4j';

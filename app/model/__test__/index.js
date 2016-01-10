@@ -52,7 +52,7 @@ describe('model test', function() {
 
     it('should count occurences of a prop', function(done) {
 
-      model.count([{foo: 'bar'}], 'mood')
+      model.count({foo: 'bar'}, 'mood')
               .then(function(data) {
 
                 assert.ok(data);
