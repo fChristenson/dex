@@ -4,6 +4,26 @@ var constants = require('../config/constants.js');
 var R         = require('ramda');
 
 /**
+ * {a:b}->String c
+ *
+ * Converts an object with moods into a string.
+ * @author <fredrik.christenson@gmail.com>
+ */
+var getMoodReduceMessage = function(data) {
+
+  var str = 'The mood in our team is:\n';
+
+  str += '* ' + data.happy + '\n';
+  str += '* ' + data.ok + '\n';
+  str += '* ' + data.unhappy;
+
+  return str;
+
+};
+
+module.exports.getMoodReduceMessage = getMoodReduceMessage;
+
+/**
  * _->Number a
  *
  * Returns a UTC number representing the number of milliseconds
@@ -49,8 +69,9 @@ module.exports.log = log;
  */
 var stringToCommand = function(str) {
 
+  str             = str.toLowerCase();
   var command     = {};
-  var match       = new RegExp('^' + constants.moods.join('|')).exec(str);
+  var match       = new RegExp('^' + constants.MOODS.join('|')).exec(str);
   command.isHelp  = /^help/.test(str);
   command.mood    = match ? match[0] : undefined;
   command.isWrite = !!command.mood;
@@ -87,11 +108,11 @@ module.exports.stringToCodeString = stringToCodeString;
  */
 var getHelpMessage = function() {
 
-  var msg = 'Hi!,\n';
+  var msg = 'Hi!\n';
 
   msg += 'To tell me how you feel, ';
   msg += 'send me a message with one of the following words:\n';
-  msg += stringToCodeString(constants.moods.join(', '));
+  msg += stringToCodeString(constants.MOODS.join(', '));
 
   return msg;
 

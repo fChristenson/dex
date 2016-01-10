@@ -48,4 +48,21 @@ describe('model test', function() {
 
   });
 
+  describe('count', function() {
+
+    it('should count occurences of a prop', function(done) {
+
+      model.count([{foo: 'bar'}], 'mood')
+              .then(function(data) {
+
+                assert.ok(data);
+                assert.equal(data.bar, 0);
+                done();
+
+              });
+
+    });
+
+  });
+
 });

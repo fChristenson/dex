@@ -1,17 +1,18 @@
 'use strict';
 
-var R = require('ramda');
-var U = require('./utils');
+var constants = require('./config/constants.js');
+var R         = require('ramda');
+var U         = require('./utils');
 
 module.exports = function(model, slack) {
 
-  slack.on('open', function() {
+  slack.on(constants.strings.SLACK_OPEN_EVENT, function() {
 
     console.log(slack.self.name, 'connected to', slack.team.name);
 
   });
 
-  slack.on('message', function(message) {
+  slack.on(constants.strings.SLACK_MESSAGE_EVENT, function(message) {
 
     // We get the channel and the user data
     var channel = slack.getChannelGroupOrDMByID(message.channel);
@@ -39,31 +40,46 @@ module.exports = function(model, slack) {
 
         })
         .then(function(data) {
-
+          // data has been saved so we get the saved mood and send back a confirmation
           var response = R.compose(R.add('Your mood is '), R.prop('mood'));
           channel.send(response(data));
 
         })
         .catch(function(error) {
-
+          // if we hit an error we report it back to the slack channel
           var response = R.compose(R.add('Error: '),  R.prop('message'));
           channel.send(response(error));
 
         });
 
     } else if (command.isHelp) {
-
+      // If a user types help we send back a message with the valid commands
       channel.send(U.getHelpMessage());
+
+    } else if (command.isRead) {
+
+      model.reduce(constants.MOODS)
+            .then(function(data) {
+
+                channel.send(U.getMoodReduceMessage(data));
+
+            })
+            .catch(function(error) {
+              // if we hit an error we report it back to the slack channel
+              var response = R.compose(R.add('Error: '),  R.prop('message'));
+              channel.send(response(error));
+
+            });
 
     } else {
 
-      channel.send('I heard you');
+      channel.send('I heard you but I don´t understand, try writing `help`');
 
     }
 
   });
 
-  slack.on('error', function(error) {
+  slack.on(constants.strings.SLACK_ERROR_EVENT, function(error) {
 
     console.log(error);
 

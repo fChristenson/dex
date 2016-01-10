@@ -48,7 +48,7 @@ describe('util tests', function() {
 
     it('should set isWrite to true if string start with a trigger', function(done) {
 
-      constants.moods.forEach(function(mood) {
+      constants.MOODS.forEach(function(mood) {
 
         var result = U.stringToCommand(mood);
         assert.ok(result.isWrite, true);
