@@ -1,14 +1,12 @@
 'use strict';
 
-var constants    = require('../../config/constants.js');
-var R            = require('ramda');
-var U            = require('../../utils');
+var constants = require('./config/constants.js');
+var R         = require('ramda');
+var U         = require('./utils');
 
 module.exports = function(emitter, model) {
 
-    emitter.on('mood', function(channel, message) {
-
-        if(message.type !== 'read') return;
+    emitter.on('mood.read', function(channel, message) {
 
         var data;
 

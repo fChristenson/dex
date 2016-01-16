@@ -1,34 +1,43 @@
 'use strict';
 
-var constants    = require('./config/constants.js');
-var R            = require('ramda');
-var U            = require('./utils');
+var constants = require('./config/constants.js');
+var R         = require('ramda');
+var U         = require('./utils');
+var fs        = require('fs');
+var path      = require('path');
 
 module.exports = function(emitter, model, slack) {
 
-  slack.on(constants.strings.SLACK_OPEN_EVENT, function() {
+    // load modules
+    var files = fs.readdirSync(path.join(__dirname, 'modules'));
 
-    console.log(slack.self.name, 'connected to', slack.team.name);
+    files.forEach(function(file) {
 
-  });
+        require(path.join(__dirname, 'modules', file))(emitter, model);
 
-  slack.on(constants.strings.SLACK_MESSAGE_EVENT, function(message) {
+    });
 
-    // We get the channel and the user data
-    var channel = slack.getChannelGroupOrDMByID(message.channel);
-    var command = U.stringToCommand(message.text);
-    var user    = slack.getUserByID(message.user);
+    slack.on(constants.strings.SLACK_OPEN_EVENT, function() {
 
-    emitter.emit('mood', channel, command, user);
+        console.log(slack.self.name, 'connected to', slack.team.name);
 
-  });
+    });
 
-  slack.on(constants.strings.SLACK_ERROR_EVENT, function(error) {
+    slack.on(constants.strings.SLACK_MESSAGE_EVENT, function(message) {
 
-    console.log(error);
+        var channel = slack.getChannelGroupOrDMByID(message.channel);
+        var user    = slack.getUserByID(message.user);
 
-  });
+        emitter.emit('message', channel, message, user);
 
-  return slack;
+    });
+
+    slack.on(constants.strings.SLACK_ERROR_EVENT, function(error) {
+
+        console.log(error);
+
+    });
+
+    return slack;
 
 };

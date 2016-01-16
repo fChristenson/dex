@@ -19,7 +19,4 @@ var slack        = new Slack(constants.SLACK_TOKEN,
                       constants.SLACK_AUTO_MARK);
 var client       = new Client(emitter, model, slack);
 
-// Modules
-require('./app/modules/mood')(emitter, model);
-
 client.login();

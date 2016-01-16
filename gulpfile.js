@@ -7,7 +7,7 @@ var istanbul = require('gulp-istanbul');
 
 gulp.task('test', function(cb) {
 
-  gulp.src(['app/**/*.js', '!app/config/*.js', '!app/index.js', '!app/**/__test__/*', '!app/models/index.js'])
+  gulp.src(['app/**/*.js', '!app/**/config/*.js', '!app/index.js', '!app/**/__test__/*', '!app/models/index.js'])
     .pipe(istanbul({includeUntested: true})) // Covering files
     .pipe(istanbul.hookRequire()) // Force `require` to return covered files
     .on('finish', function() {

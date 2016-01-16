@@ -6,14 +6,6 @@ module.exports.SLACK_AUTO_MARK      = true;
 module.exports.DB_USER              = process.env.DB_USER || 'neo4j';
 module.exports.DB_PASSWORD          = process.env.DB_PASSWORD || 'password';
 
-module.exports.MOODS = [
-
-    'happy',
-    'ok',
-    'unhappy'
-
-];
-
 module.exports.strings = {
 
   SLACK_OPEN_EVENT: 'open',

@@ -1,18 +1,16 @@
 'use strict';
 
-var constants    = require('../../config/constants.js');
-var R            = require('ramda');
-var U            = require('../../utils');
+var R      = require('ramda');
+var U      = require('../../utils');
+var crypto = require('crypto');
 
 module.exports = function(emitter, model) {
 
-    emitter.on('mood', function(channel, message, user) {
-
-        if (message.type !== 'save') return;
+    emitter.on('mood.save', function(channel, message, user) {
 
         // users id are hashed to keep everything anonymous
         var date = U.todayAsMilliseconds(); // users mood are recorded on a daily basis
-        var hash = require('crypto')
+        var hash = crypto
             .createHash('sha256')
             .update(user.id, 'utf8')
             .digest('base64');
